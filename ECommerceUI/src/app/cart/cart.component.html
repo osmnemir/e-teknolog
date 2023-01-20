@@ -1,0 +1,62 @@
+<div class="my-container mx-auto border border-dark">
+    <div class="p-4 border my-rounded-corner">
+        <h3 class="w-25 border text-center py-2 my-rounded-corner">Sepet</h3>
+        <div class="mt-5">
+            <div class="d-grid w-50 mx-auto mb-3">
+                <button class="btn btn-outline-success fs-4" type="button" routerLink="/orders">Sipariş</button>
+            </div>
+            <table class="table w-50 mx-auto table-bordered table-hover my-shadow">
+                <tbody>
+                    <tr>
+                        <td>Toplam ürün</td>
+                        <td class="fs-5 fw-bold"> {{usersCart.cartItems.length}} </td>
+                    </tr>
+                    <tr>
+                        <td>Toplam fiyat</td>
+                        <td class="fs-5 fw-bold text-danger"> {{usersPaymentInfo.totalAmount}} </td>
+                    </tr>
+                    <tr>
+                        <td>İndirim</td>
+                        <td class="fs-5 fw-bold text-success">{{usersPaymentInfo.amountReduced}}</td>
+                    </tr>
+                    <tr>
+                        <td>Ödenecek</td>
+                        <td class="fs-5 fw-bold text-success">{{usersPaymentInfo.amountPaid}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="current-cart-items w-75 mx-auto mt-5">
+            <h4>Sepetdeki ürünler</h4>
+            <div class="row mt-4 g-0">
+                <div class="col-6 py-3 px-2" *ngFor="let cartItem of usersCart.cartItems">
+                    <app-product [view]="'currcartitem'" [product]="cartItem.product"></app-product>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-5 p-4 border my-rounded-corner">
+        <h3 class="w-25 border text-center py-2 mb-5 my-rounded-corner">Sepetdeki ürünler</h3>
+
+        <div class="card mb-5" *ngFor="let cart of usersPreviousCarts">
+            <div class="card-header d-flex fw-bold justify-content-between align-items-center">
+                <span class="time">Sepet : 
+                    <span class="fs-5">{{cart.orderedOn | date:"dd-MMM-YYYY"}}</span>
+                </span>
+                <span class="count">Ürün: {{cart.cartItems.length}}</span>
+                <span class="price">Fiyat : 
+                    <span class="fs-5"> {{utilityService.calculatePricePaid(cart)}} </span>
+                </span>
+            </div>
+
+            <div class="cart-body px-4 py-2">
+                <div class="row g-0">
+                    <div class="col-2 px-2 py-2" *ngFor="let cartItem of cart.cartItems">
+                        <app-product [view]="'prevcartitem'" [product]="cartItem.product"></app-product>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
